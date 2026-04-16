@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAB Project Application</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 2rem; color: #1a1a1a; }
+    .wrap { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 2rem; border: 1px solid #e0e0e0; }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+    .sub { font-size: 13px; color: #666; margin-bottom: 1.5rem; }
+    .section { font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.06em; border-top: 1px solid #eee; padding-top: 1rem; margin: 1.5rem 0 0.75rem; }
+    .field { margin-bottom: 1rem; }
+    label { display: block; font-size: 13px; font-weight: 500; color: #555; margin-bottom: 5px; }
+    input, textarea { width: 100%; font-size: 14px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 8px; padding: 8px 12px; color: #1a1a1a; background: #fff; }
+    textarea { min-height: 80px; resize: vertical; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .curw { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+    .curw label { font-size: 12px; }
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 10px; }
+    .note { font-size: 12px; color: #666; }
+    button { font-size: 14px; padding: 9px 22px; border-radius: 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-family: Arial, sans-serif; }
+    button:hover { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>LAB project application</h1>
+    <p class="sub">Complete all fields and click submit to email Mohit for approval before any work begins.</p>
+
+    <div class="section">Project details</div>
+    <div class="field"><label>Project name</label><input type="text" id="f1" placeholder="e.g. Live comment integration"></div>
+    <div class="field"><label>Description</label><textarea id="f2" placeholder="What is this project and what does it do?"></textarea></div>
+    <div class="row">
+      <div class="field"><label>Proposed by</label><input type="text" id="f3" placeholder="Your name"></div>
+      <div class="field"><label>Date</label><input type="text" id="f4" placeholder="DD/MM/YYYY"></div>
+    </div>
+
+    <div class="section">Effort & timeline</div>
+    <div class="row">
+      <div class="field"><label>Hours per week needed</label><input type="text" id="f5" placeholder="e.g. 3 hrs/week"></div>
+      <div class="field"><label>Estimated duration</label><input type="text" id="f6" placeholder="e.g. 6 weeks"></div>
+    </div>
+    <div class="field"><label>Total LAB hours required</label><input type="text" id="f7" placeholder="Hours/week x duration"></div>
+
+    <div class="section">Projected metrics</div>
+    <div class="row">
+      <div class="field"><label>Projected DAUs</label><input type="text" id="f8" placeholder="Daily active users"></div>
+      <div class="field"><label>Projected MAUs</label><input type="text" id="f9" placeholder="Monthly active users"></div>
+    </div>
+    <div class="field">
+      <label>Estimated CURW metrics</label>
+      <div class="curw">
+        <div class="field"><label>Conversion</label><input type="text" id="f10" placeholder="e.g. 20% of users book"></div>
+        <div class="field"><label>Usage</label><input type="text" id="f11" placeholder="e.g. 10 min avg session"></div>
+        <div class="field"><label>Retention</label><input type="text" id="f12" placeholder="e.g. 60% return weekly"></div>
+        <div class="field"><label>Word of mouth</label><input type="text" id="f13" placeholder="e.g. 30% organic growth"></div>
+      </div>
+    </div>
+
+    <div class="section">Business case</div>
+    <div class="field"><label>Expected revenue timeline</label><input type="text" id="f14" placeholder="e.g. Revenue expected in 6 months"></div>
+    <div class="field"><label>Business case / value justification</label><textarea id="f15" placeholder="Why should this be accepted into the LAB program?"></textarea></div>
+
+    <div class="footer">
+      <span class="note">Clicking submit will open your email client addressed to Mohit.</span>
+      <button onclick="sendEmail()">Submit for review</button>
+    </div>
+  </div>
+
+  <script>
+    function g(id) { return document.getElementById(id).value || '—'; }
+    function sendEmail() {
+      var name = g('f1');
+      var subject = 'LAB Project Application — ' + name;
+      var body = [
+        'Hi Mohit,',
+        '',
+        'Please find my LAB project application below for your approval.',
+        '',
+        '--- PROJECT DETAILS ---',
+        'Project Name: ' + name,
+        'Description: ' + g('f2'),
+        'Proposed By: ' + g('f3'),
+        'Date: ' + g('f4'),
+        '',
+        '--- EFFORT & TIMELINE ---',
+        'Hours Per Week: ' + g('f5'),
+        'Estimated Duration: ' + g('f6'),
+        'Total LAB Hours Required: ' + g('f7'),
+        '',
+        '--- PROJECTED METRICS ---',
+        'Projected DAUs: ' + g('f8'),
+        'Projected MAUs: ' + g('f9'),
+        'Conversion: ' + g('f10'),
+        'Usage: ' + g('f11'),
+        'Retention: ' + g('f12'),
+        'Word of Mouth: ' + g('f13'),
+        '',
+        '--- BUSINESS CASE ---',
+        'Expected Revenue Timeline: ' + g('f14'),
+        'Business Case: ' + g('f15'),
+        '',
+        'Please reply to approve or reject before any work begins.',
+        '',
+        'Thank you.'
+      ].join('\n');
+
+      var link = document.createElement('a');
+      link.href = 'mailto:mohit@1playsports.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
